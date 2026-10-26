@@ -311,7 +311,7 @@ q2(sb.from('app_config').select('v').eq('k','pay').maybeSingle(),function(r){if(
 q2(sb.from('payments').select('id,method,amount,months,reference,status,created_at').order('created_at',{ascending:false}).limit(6),function(r){if(r.data){myPay=r.data;if(v=='sub')soft()}});
 q2(sb.rpc('is_admin'),function(r){
   if(r.error){
-    alert('Admin check error: '+r.error.message);
+    alert('وصلنا لفحص Admin');
     return;
   }
   isAdm=r.data===true;
