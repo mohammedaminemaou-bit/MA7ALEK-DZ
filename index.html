@@ -277,8 +277,14 @@ for(var k=6;k>=0;k--){d0=new Date().setHours(0,0,0,0)-k*DAY;(function(a){dv.push
 for(var h=7;h<=23;h++){(function(g){hv.push(sum(ss.filter(function(x){return new Date(x.t).getHours()==g}),function(x){return x.total}));hl.push(g%3==0?g:'')})(h)}
 var mxd=Math.max.apply(null,dv),mxh=Math.max.apply(null,hv);
 return '<div class="b">المبيعات آخر 7 أيام</div><div class="c">'+bars(dv,dl)+(mxd>0?'<div class="m">أحسن يوم: '+WF[new Date(new Date().setHours(0,0,0,0)-(6-dv.indexOf(mxd))*DAY).getDay()]+' · '+fmt(mxd)+'</div>':'')+'</div><div class="b">ساعات الذروة</div><div class="c">'+bars(hv,hl)+(mxh>0?'<div class="m">ذروة البيع حوالي الساعة '+(7+hv.indexOf(mxh))+':00</div>':'<div class="m">لا توجد مبيعات في هذه المدة</div>')+'</div>'}
-
-function q2(p,f){p.then(f).catch(function(){})}
+function q2(p,f){
+  p.then(function(r){
+    if(r && r.error) console.error('Supabase error:',r.error);
+    f(r);
+  }).catch(function(e){
+    console.error('Request failed:',e);
+  });
+}
 function subStatus(){if(!sub)return{k:'unk'};var n=Date.now(),pu=sub.paid_until?Date.parse(sub.paid_until):0,te=sub.trial_ends?Date.parse(sub.trial_ends):0;if(pu>n)return{k:'paid',d:Math.ceil((pu-n)/DAY),u:pu};if(te>n)return{k:'trial',d:Math.ceil((te-n)/DAY)};return{k:'exp'}}
 function gateExp(){return subStatus().k=='exp'}
 function PC(){return payCfg||{}}
