@@ -309,7 +309,11 @@ function loadSub(){if(!sb||!uid)return;
 q2(sb.from('subscriptions').select('trial_ends,paid_until').eq('user_id',uid).maybeSingle(),function(r){if(r.error||!r.data)return;sub=r.data;try{localStorage.setItem(KEY+'-sub',JSON.stringify(sub))}catch(e){}gate();promo()});
 q2(sb.from('app_config').select('v').eq('k','pay').maybeSingle(),function(r){if(r.data)payCfg=r.data.v});
 q2(sb.from('payments').select('id,method,amount,months,reference,status,created_at').order('created_at',{ascending:false}).limit(6),function(r){if(r.data){myPay=r.data;if(v=='sub')soft()}});
-q2(sb.rpc('is_admin'),function(r){isAdm=r.data===true;if(isAdm)loadAdm()})}
+q2(sb.rpc('is_admin'),function(r){
+  isAdm=r.data===true;
+  alert('UID: '+uid+'\nAdmin: '+isAdm);
+  if(isAdm)loadAdm()
+})
 function loadAdm(){if(!isAdm||!sb)return;q2(sb.rpc('admin_pending'),function(r){admList=r.data||[];if(v=='adm')soft()});q2(sb.rpc('admin_stats'),function(r){admSt=r.data;if(v=='home'||v=='adm')soft()})}
 function subBanner(){if(role=='w')return '';var st=subStatus(),h='';
 if(st.k=='trial')h+='<div class="c" data-a="go" data-v="sub" style="cursor:pointer;border:1.5px solid var(--gold)"><div class="b">🎁 تجربة مجانية: باقي '+st.d+' يوم ›</div><div class="m">يجب عليك دفع الاشتراك قبل انتهائها حتى لا يتوقف التطبيق</div></div>';
