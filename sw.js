@@ -1,6 +1,6 @@
 /* MA7ALAK DZ — Service Worker
    غيّر رقم VERSION عند كل نشر جديد حتى تصل النسخة الجديدة للمستخدمين. */
-const VERSION = 'v2';
+const VERSION = 'v1';
 const CACHE = 'ma7alak-' + VERSION;
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png'];
 const CDN = ['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.110.1'];
